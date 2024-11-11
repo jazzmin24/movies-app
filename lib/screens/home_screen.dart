@@ -87,19 +87,19 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Row(
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 8.0.w), 
+              padding: EdgeInsets.only(left: 8.0.w),
               child: Image.asset(
                 'assets/images/netflix_logo.png',
                 fit: BoxFit.contain,
-                height: 30.h, 
+                height: 30.h,
               ),
             ),
             Expanded(
               child: GestureDetector(
                 onTap: () => Navigator.pushNamed(context, '/search'),
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10.w), 
-                  height: 40.h, 
+                  margin: EdgeInsets.symmetric(horizontal: 10.w),
+                  height: 40.h,
                   child: TextField(
                     enabled: false,
                     decoration: InputDecoration(
@@ -107,10 +107,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       fillColor: Colors.white.withOpacity(0.1),
                       hintText: 'Search...',
                       hintStyle: const TextStyle(color: Colors.white54),
-                      prefixIcon: const Icon(Icons.search, color: Colors.white54),
-                      contentPadding: EdgeInsets.symmetric(vertical: 10.h), 
+                      prefixIcon:
+                          const Icon(Icons.search, color: Colors.white54),
+                      contentPadding: EdgeInsets.symmetric(vertical: 10.h),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.r), 
+                        borderRadius: BorderRadius.circular(10.r),
                         borderSide: BorderSide.none,
                       ),
                     ),
@@ -122,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: categorizedMovies.isEmpty
-          ? const Center(child: CircularProgressIndicator())
+          ? Container()
           : ListView.builder(
               itemCount: categorizedMovies.length,
               itemBuilder: (context, index) {
@@ -131,24 +132,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 16.0.w), 
+                      padding: EdgeInsets.symmetric(
+                          vertical: 8.0.h, horizontal: 16.0.w),
                       child: Text(
                         category['title'],
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 18.sp, 
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
                     SizedBox(
-                      height: 200.h, 
+                      height: 200.h,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: category['movies'].length,
                         itemBuilder: (context, movieIndex) {
                           final movie = category['movies'][movieIndex]['show'];
                           return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0.w), 
+                            padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(context, '/details',
@@ -159,19 +161,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   CachedNetworkImage(
                                     imageUrl: movie['image']?['medium'] ?? '',
-                                    placeholder: (context, url) =>
-                                        const CircularProgressIndicator(),
+                                    placeholder: (context, url) => Container(),
                                     errorWidget: (context, url, error) =>
                                         const Icon(Icons.error),
-                                    width: 120.w, 
-                                    height: 160.h, 
+                                    width: 120.w,
+                                    height: 160.h,
                                     fit: BoxFit.cover,
                                   ),
-                                  SizedBox(height: 5.h), 
+                                  SizedBox(height: 5.h),
                                   Text(
                                     movie['name'] ?? 'No title',
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 14.sp), 
+                                        color: Colors.white, fontSize: 14.sp),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
